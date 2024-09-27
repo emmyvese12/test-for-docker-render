@@ -12,9 +12,9 @@ RUN npm install
 
 # Copy all server files in the container
 COPY . .
-    
+
 # Open the port for the Express server
 EXPOSE 8889
 
-# Run Express 
+# Start
 CMD ["npm", "run", "start"]
