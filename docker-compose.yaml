@@ -1,0 +1,38 @@
+# List of services
+services:
+  # Database service
+  postgres:
+    image: postgres:latest
+    restart: always
+    container_name: postgres_test
+    ports:
+      - 5432:5432
+    env_file:
+      - ./server/.env
+
+  # Server service
+  backend:
+    image: backend-service-test
+    container_name: backend_test
+    pull_policy: never
+    build: 
+      context: ./server
+      dockerfile: Dockerfile
+    ports:
+      - 8889:8889
+    depends_on:
+      - postgres
+      
+  # Client service
+  frontend:
+    image: frontend-service-test
+    container_name: frontend_test
+    pull_policy: never
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    depends_on:
+      - backend
+    
