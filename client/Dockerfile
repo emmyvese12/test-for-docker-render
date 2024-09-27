@@ -19,5 +19,5 @@ EXPOSE 3000
 # Compiles app 
 RUN npm run build
 
-# Run app
-CMD ["npm", "start"]
+# Start
+CMD ["npm", "run", "start"]
