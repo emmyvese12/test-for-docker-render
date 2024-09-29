@@ -8,7 +8,9 @@ services:
     ports:
       - 5432:5432
     env_file:
-      - ./server/.env
+      - ./server/.env # access to db password, user, db name
+    volumes: 
+      - pg_data:/var/lib/postgresql/data  # persist postgres data across containers in this named volume: pg_data
 
   # Server service
   backend:
@@ -18,10 +20,15 @@ services:
     build: 
       context: ./server
       dockerfile: Dockerfile
+      target: ${TARGET_ENV}
     ports:
       - 8889:8889
     depends_on:
       - postgres
+    env_file:
+      - ./server/.env # access to DB_URL
+    # volumes:
+    #   - ./server:/app  # Mount local server to the container
       
   # Client service
   frontend:
@@ -31,8 +38,15 @@ services:
     build:
       context: ./client
       dockerfile: Dockerfile
+      target: ${TARGET_ENV}
     ports:
       - 3000:3000
     depends_on:
       - backend
-    
+    env_file:
+      - ./client/.env.local 
+    # volumes:
+    #   - ./client:/app  
+
+volumes:
+  pg_data:
