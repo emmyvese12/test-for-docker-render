@@ -53,7 +53,6 @@ export default function GetTrips() {
           <div>
             <p>Trip {trip.id}</p>
             <br></br>
-            <li>hello</li>
             <li>{trip.name}</li>
             <li>{trip.start_date} to {trip.end_date}</li>
             <li>${trip.budget}</li>
